@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# The following must be set before starting the goma client:
+#export GOMA_SETTINGS_SERVER=http://goma.corp.vewd.com:9090/settings
+# Linköping developers can try a local cache:
+#export GOMA_SETTINGS_SERVER=http://gomaproxy.desk.lkpg.corp.vewd.com:9090/settings
+# For Wrocław:
+#export GOMA_SETTINGS_SERVER=http://gomaproxy.desk.wro.corp.vewd.com:9090/settings
+# For Gothenburg:
+#export GOMA_SETTINGS_SERVER=http://azrael.desk.gbg.corp.vewd.com:9090/settings
+export GOMA_PROXY_PORT=9090
+export GOMA_PROXY_HOST=10.82.82.25
+export GOMA_PROVIDE_INFO=false
+export GOMA_HTTP_SOCKET_READ_TIMEOUT_SECS=10.0
+
+# Set this if you want the local webui to listen on 0.0.0.0:8088
+# instead of 127.0.0.1:8088
+#export GOMA_COMPILER_PROXY_LISTEN_ADDR=""
+
+# The following should be set before starting your build:
+export GOMA_USE_LOCAL=false
+export GOMA_FALLBACK=false # Set to true (the default) if you would like failing remote jobs to be retried locally.
+export GOMA_STORE_ONLY=true # If you want to disable the output cache
+export GOMA_DIR=/opt/goma-client # Used by GN.  Alternatively, set a goma_dir GN arg.
+
+# With the default values, goma will be bottlenecked
+# by the open file limit (typically 1024).
+ulimit -Sn 4096
+
+#build.sh auto complete
+BASH_SOURCE=/home/jliu/work/tvsdk/tools/tvsdk_bash_completion.sh emulate ksh -c '. "$BASH_SOURCE"'
+
